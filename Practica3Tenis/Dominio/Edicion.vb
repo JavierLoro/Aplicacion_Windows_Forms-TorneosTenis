@@ -1,4 +1,5 @@
 ﻿Public Class Edicion
+    ''prueba git
     Public Property Anualidad As Integer
     Public Property Torneo As Torneos
     Public Property Ganadora As Jugadora
