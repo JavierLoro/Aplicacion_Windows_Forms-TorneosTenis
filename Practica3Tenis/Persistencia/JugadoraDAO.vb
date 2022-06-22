@@ -86,10 +86,10 @@
         Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras SET  PuntosJugadora=PuntosJugadora+" & puntos & " Where idJugadora=" & p.idJugadora & ";")
     End Function
 
-    Public Function FinalesGanadas(ByVal p As Jugadora) As Integer
+    Public Function PartidosGanados(ByVal p As Jugadora) As Integer
         Dim result
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("SELECT COUNT(Ganadora) FROM Ediciones WHERE Ganadora=" & p.idJugadora & ";")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT COUNT(Ganadora) FROM Partidos WHERE Ganadora=" & p.idJugadora & ";")
         For Each aux In col
             result = Convert.ToInt32(aux(1).ToString)
         Next
