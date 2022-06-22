@@ -61,8 +61,8 @@
     Public Function FinalesDisputadas() As Integer
         Return Me.JugaDAO.FinalesDisputadas(Me)
     End Function
-    Public Function FinalesGanadas() As Integer
-        Return Me.JugaDAO.FinalesGanadas(Me)
+    Public Function PartidosGanados() As Integer
+        Return Me.JugaDAO.PartidosGanados(Me)
     End Function
 
     Friend Function anualcompetido() As List(Of Integer)

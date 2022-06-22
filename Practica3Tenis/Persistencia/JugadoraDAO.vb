@@ -107,7 +107,7 @@ WHERE (Juegos.Jugadora=11 AND not Partidos.Ganadora=" & p.idJugadora & " AND Edi
         Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras Set  PuntosJugadora=PuntosJugadora+" & puntos & " Where idJugadora=" & p.idJugadora & ";")
     End Function
 
-    Public Function FinalesGanadas(ByVal p As Jugadora) As Integer
+    Public Function PartidosGanados(ByVal p As Jugadora) As Integer
         Dim result
         Dim col, aux As Collection
         col = AgenteBD.ObtenerAgente.Leer("Select COUNT(Ganadora) FROM Ediciones WHERE Ganadora=" & p.idJugadora & ";")
