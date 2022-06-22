@@ -82,12 +82,14 @@ WHERE (Juegos.Jugadora=11 AND not Partidos.Ganadora=" & p.idJugadora & " AND Edi
 
     End Function
 
-    Public Function VerTorneosParticipados(p As Jugadora) As List(Of String)
+    Public Function VerTorneosParticipados(p As Jugadora) As List(Of Torneos)
         Dim col As Collection : Dim aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("Select DISTINCT Torneos.NombreTorneo FROM (Torneos INNER JOIN (Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido) On Torneos.idTorneo = Partidos.Torneo) INNER JOIN Ediciones On (Torneos.idTorneo = Ediciones.Torneo) And (Partidos.Anualidad = Ediciones.Anualidad) WHERE Juegos.Jugadora = " & p.idJugadora & ";")
-        Dim lista As New List(Of String)
+        col = AgenteBD.ObtenerAgente.Leer("Select DISTINCT Torneos.idTorneo FROM (Torneos INNER JOIN (Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido) On Torneos.idTorneo = Partidos.Torneo) INNER JOIN Ediciones On (Torneos.idTorneo = Ediciones.Torneo) And (Partidos.Anualidad = Ediciones.Anualidad) WHERE Juegos.Jugadora = " & p.idJugadora & ";")
+        Dim lista As New List(Of Torneos)
         For Each aux In col
-            lista.Add(aux(1).ToString)
+            Dim t As New Torneos(aux(1).ToString)
+            t.LeerTorneos()
+            lista.Add(t)
         Next
         Return lista
 

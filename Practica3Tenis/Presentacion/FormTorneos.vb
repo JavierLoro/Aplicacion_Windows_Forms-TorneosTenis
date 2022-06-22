@@ -54,7 +54,7 @@
             If Not ComBoxEdiciones.Items.Count = 0 Then
                 ComBoxEdiciones.SelectedIndex = 0
             Else
-                ComBoxEdiciones.SelectedItem = ""
+                ComBoxEdiciones.SelectedIndex = -1
             End If
 
 

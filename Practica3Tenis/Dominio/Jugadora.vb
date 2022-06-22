@@ -73,7 +73,7 @@
         Return Me.JugaDAO.VerResultadosAnual(Me, torneo)
     End Function
 
-    Friend Function torneosParticipados() As List(Of String)
+    Friend Function torneosParticipados() As List(Of Torneos)
         Return Me.JugaDAO.VerTorneosParticipados(Me)
     End Function
 

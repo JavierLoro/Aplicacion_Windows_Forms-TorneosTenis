@@ -1,7 +1,7 @@
 ﻿Public Class FormJugadoras
     Private jugadoras As Jugadora = New Jugadora
     Private torneos As Torneos = New Torneos
-
+    Private torn As List(Of Torneos) = New List(Of Torneos)
 
     Public Sub New()
         jugadoras = New Jugadora
@@ -36,9 +36,10 @@
             End Try
             btnLimpiar.PerformClick()
             ''Estadisticas
-            Dim torn = JAux.torneosParticipados()
-            For Each ot As String In torn
-                listaTorneos.Items.Add(ot)
+            torn = JAux.torneosParticipados()
+
+            For Each ot As Torneos In torn
+                listaTorneos.Items.Add(ot.NombreTorneo)
             Next
 
             Dim anualidades = JAux.anualcompetido()
@@ -46,6 +47,17 @@
                 listaAños.Items.Add(an)
             Next
 
+            If Not listaAños.Items.Count = 0 Then
+                listaAños.SelectedIndex = 0
+            Else
+                listaAños.SelectedIndex = -1
+            End If
+
+            If Not listaTorneos.Items.Count = 0 Then
+                listaTorneos.SelectedIndex = 0
+            Else
+                listaTorneos.SelectedIndex = -1
+            End If
 
             ''Cargamos datos de la jugadora
             txbid_J.Text = JAux.idJugadora
@@ -132,6 +144,10 @@
     End Sub
 
     Private Sub btnLimpiar_Click(sender As Object, e As EventArgs) Handles btnLimpiar.Click
+        listaAños.Items.Clear()
+        listaTorneos.Items.Clear()
+        listb_anu.Items.Clear()
+        listb_torn.Items.Clear()
         txbid_J.Text = String.Empty
         txbNomb_J.Text = String.Empty
         btnAñad_J.Enabled = True
@@ -141,8 +157,9 @@
 
     Private Sub listaTorneos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaTorneos.SelectedIndexChanged
         Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
-        Dim EAux = JAux.resultadosTorneo(listaTorneos.SelectedItem)
-        For Each tor As Integer In EAux
+        Dim EAux = JAux.resultadosTorneo(torn(listaTorneos.SelectedIndex).idTorneos)
+        listb_torn.Items.Clear()
+        For Each tor As String In EAux
             listb_torn.Items.Add(tor)
         Next
     End Sub
@@ -150,8 +167,9 @@
     Private Sub listaAños_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaAños.SelectedIndexChanged
         Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
         Dim EAux = JAux.anualresultados(listaAños.SelectedItem)
-        For Each tor As Integer In EAux
-            listb_torn.Items.Add(tor)
+        listb_anu.Items.Clear()
+        For Each tor As String In EAux
+            listb_anu.Items.Add(tor)
         Next
     End Sub
 
