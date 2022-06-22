@@ -36,7 +36,15 @@
             End Try
             btnLimpiar.PerformClick()
             ''Estadisticas
+            Dim torn = JAux.torneosParticipados()
+            For Each ot As String In torn
+                listaTorneos.Items.Add(ot)
+            Next
 
+            Dim anualidades = JAux.anualcompetido()
+            For Each an As Integer In anualidades
+                listaAños.Items.Add(an)
+            Next
 
 
             ''Cargamos datos de la jugadora
@@ -133,9 +141,18 @@
 
     Private Sub listaTorneos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaTorneos.SelectedIndexChanged
         Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
-        Dim EAux = JAux.datosTorneos(JAux)
+        Dim EAux = JAux.resultadosTorneo(listaTorneos.SelectedItem)
         For Each tor As Integer In EAux
             listb_torn.Items.Add(tor)
         Next
     End Sub
+
+    Private Sub listaAños_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaAños.SelectedIndexChanged
+        Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
+        Dim EAux = JAux.anualresultados(listaAños.SelectedItem)
+        For Each tor As Integer In EAux
+            listb_torn.Items.Add(tor)
+        Next
+    End Sub
+
 End Class
