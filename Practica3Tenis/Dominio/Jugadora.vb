@@ -65,7 +65,19 @@
         Return Me.JugaDAO.PartidosGanados(Me)
     End Function
 
-    Friend Function datosTorneos(jAux As Jugadora) As List(Of String)
+    Friend Function anualcompetido() As List(Of Integer)
+        Return Me.JugaDAO.VerAnualCompetido(Me)
+    End Function
+
+    Friend Function anualresultados(torneo As Integer) As List(Of String)
+        Return Me.JugaDAO.VerResultadosAnual(Me, torneo)
+    End Function
+
+    Friend Function torneosParticipados() As List(Of String)
         Return Me.JugaDAO.VerTorneosParticipados(Me)
+    End Function
+
+    Friend Function resultadosTorneo(edic As Integer) As List(Of String)
+        Return Me.JugaDAO.VerResultadosTorneo(Me, edic)
     End Function
 End Class
