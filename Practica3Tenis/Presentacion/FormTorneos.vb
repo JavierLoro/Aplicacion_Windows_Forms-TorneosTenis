@@ -255,7 +255,7 @@
         Dim TAux As Torneos
         Dim aux As Integer
         ''Comprobar que los campos no estan vacios
-        If txtAnualidad IsNot String.Empty Then
+        If txtAnualidad.Text IsNot String.Empty Then
             TAux = New Torneos(txbId.Text)
             aux = Convert.ToInt32(txtAnualidad.Text)
             If TAux.TorDAO.comprobarEdicion(TAux, aux) = Nothing Then
@@ -264,15 +264,15 @@
                 EAux = New Edicion(aux, TAux, jugadoras)
                 lblNuevEdic.Text = "Edicion Creada"
                 lblNuevEdic.ForeColor = Color.Green
+                actualizarDatos(listTorneos.SelectedItem.ToString())
+                ComBoxEdiciones.SelectedItem = EAux.Anualidad
             Else
                 lblNuevEdic.Text = "Edicion ya existe"
                 lblNuevEdic.ForeColor = Color.Red
 
             End If
-        End If
 
-        actualizarDatos(listTorneos.SelectedItem.ToString())
-        ComBoxEdiciones.SelectedItem = EAux.Anualidad
+        End If
 
     End Sub
 
