@@ -69,15 +69,15 @@
         Return Me.JugaDAO.VerAnualCompetido(Me)
     End Function
 
-    Friend Function anualresultados(torneo As Integer) As List(Of String)
-        Return Me.JugaDAO.VerResultadosAnual(Me, torneo)
+    Friend Function anualresultados(edic As Integer) As List(Of String)
+        Return Me.JugaDAO.VerResultadosAnual(Me, edic)
     End Function
 
     Friend Function torneosParticipados() As List(Of Torneos)
         Return Me.JugaDAO.VerTorneosParticipados(Me)
     End Function
 
-    Friend Function resultadosTorneo(edic As Integer) As List(Of String)
-        Return Me.JugaDAO.VerResultadosTorneo(Me, edic)
+    Friend Function resultadosTorneo(idTor As Integer) As List(Of String)
+        Return Me.JugaDAO.VerResultadosTorneo(Me, idTor)
     End Function
 End Class

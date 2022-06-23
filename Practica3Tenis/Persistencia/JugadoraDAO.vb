@@ -71,9 +71,7 @@
 
     Public Function VerResultadosAnual(p As Jugadora, edic As Integer) As List(Of String)
         Dim col As Collection : Dim aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("SELECT Torneos.NombreTorneo, Partidos.Ronda
-FROM Torneos INNER JOIN ((Partidos INNER JOIN Ediciones ON Partidos.Anualidad = Ediciones.Anualidad) INNER JOIN Juegos ON Partidos.idPartido = Juegos.Partido) ON (Torneos.idTorneo = Ediciones.Torneo) AND (Torneos.idTorneo = Partidos.Torneo)
-WHERE (Juegos.Jugadora=11 AND not Partidos.Ganadora=" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ") OR Ediciones.Ganadora=11;")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT Torneos.NombreTorneo, Partidos.Ronda FROM Torneos INNER JOIN ((Partidos INNER JOIN Ediciones ON Partidos.Anualidad = Ediciones.Anualidad) INNER JOIN Juegos ON Partidos.idPartido = Juegos.Partido) ON (Torneos.idTorneo = Ediciones.Torneo) AND (Torneos.idTorneo = Partidos.Torneo) WHERE Juegos.Jugadora=" & p.idJugadora & " AND Partidos.Ganadora<>" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ";")
         Dim lista As New List(Of String)
         For Each aux In col
             lista.Add(aux(1).ToString & " - " & aux(2).ToString)
@@ -96,7 +94,7 @@ WHERE (Juegos.Jugadora=11 AND not Partidos.Ganadora=" & p.idJugadora & " AND Edi
     End Function
     Public Function VerResultadosTorneo(p As Jugadora, idTor As Integer) As List(Of String)
         Dim col As Collection : Dim aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("Select Partidos.Anualidad, Partidos.Ronda FROM (Torneos INNER JOIN (Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido) On Torneos.idTorneo = Partidos.Torneo) INNER JOIN Ediciones On (Torneos.idTorneo = Ediciones.Torneo) And (Partidos.Anualidad = Ediciones.Anualidad) WHERE ((Juegos.Jugadora = " & p.idJugadora & " And Not Partidos.Ganadora = " & p.idJugadora & ") Or Ediciones.Ganadora = " & p.idJugadora & ") And Torneos.idTorneo=" & idTor & ";")
+        col = AgenteBD.ObtenerAgente.Leer("Select Partidos.Anualidad, Partidos.Ronda FROM (Torneos INNER JOIN (Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido) On Torneos.idTorneo = Partidos.Torneo) INNER JOIN Ediciones On (Torneos.idTorneo = Ediciones.Torneo) And (Partidos.Anualidad = Ediciones.Anualidad) WHERE (Juegos.Jugadora = " & p.idJugadora & " And Not Partidos.Ganadora = " & p.idJugadora & ") And Torneos.idTorneo=" & idTor & ";")
         Dim lista As New List(Of String)
         For Each aux In col
             lista.Add(aux(1).ToString & " - " & aux(2).ToString)

@@ -13,7 +13,7 @@
     Private Sub FormJugadoras_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.InitializeComponent()
         For Each Pj As Jugadora In jugadoras.JugaDAO.Jugadora
-            listb_Jugadoras.Items.Add(Pj.idJugadora)
+            listb_Jugadoras.Items.Add(Pj.NombreJugadora & " (" & Pj.idJugadora & ")")
         Next
     End Sub
 
@@ -26,7 +26,7 @@
     Private Sub listb_Jugadoras_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listb_Jugadoras.SelectedIndexChanged
         Dim JAux As Jugadora
         If listb_Jugadoras.SelectedItem IsNot Nothing Then
-            JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
+            JAux = jugadoras.JugaDAO.Jugadora(listb_Jugadoras.SelectedIndex + 1)
             Try
                 JAux.LeerJugadora()
             Catch ex As Exception
@@ -49,14 +49,10 @@
 
             If Not listaAños.Items.Count = 0 Then
                 listaAños.SelectedIndex = 0
-            Else
-                listaAños.SelectedIndex = -1
             End If
 
             If Not listaTorneos.Items.Count = 0 Then
                 listaTorneos.SelectedIndex = 0
-            Else
-                listaTorneos.SelectedIndex = -1
             End If
 
             ''Cargamos datos de la jugadora
@@ -156,7 +152,8 @@
     End Sub
 
     Private Sub listaTorneos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaTorneos.SelectedIndexChanged
-        Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
+        Dim JAux As Jugadora
+        JAux = jugadoras.JugaDAO.Jugadora(listb_Jugadoras.SelectedIndex + 1)
         Dim EAux = JAux.resultadosTorneo(torn(listaTorneos.SelectedIndex).idTorneos)
         listb_torn.Items.Clear()
         For Each tor As String In EAux
@@ -165,7 +162,8 @@
     End Sub
 
     Private Sub listaAños_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listaAños.SelectedIndexChanged
-        Dim JAux = New Jugadora(listb_Jugadoras.SelectedItem.ToString())
+        Dim JAux As Jugadora
+        JAux = jugadoras.JugaDAO.Jugadora(listb_Jugadoras.SelectedIndex + 1)
         Dim EAux = JAux.anualresultados(listaAños.SelectedItem)
         listb_anu.Items.Clear()
         For Each tor As String In EAux
