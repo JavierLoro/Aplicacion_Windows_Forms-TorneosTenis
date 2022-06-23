@@ -45,13 +45,13 @@
     End Sub
 
     Public Function Insertar(ByVal p As Jugadora) As Integer
-        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Jugadoras ([NombreJugadora], [FechaNacimiento], [PuntosJugadora], [PaisJugadora]) VALUES (" & p.NombreJugadora & "', " & p.FechaNacimiento & ", " & p.PuntosJugadora & ", '" & p.Pais.idPais & "');")
+        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Jugadoras ([NombreJugadora], [FechaNacimientoJugadora], [PuntosJugadora], [PaisJugadora]) VALUES ('" & p.NombreJugadora & "', " & p.FechaNacimiento & ", " & 0 & ", '" & p.Pais.idPais & "');")
         p.idJugadora = UltimoId()
         Return v
     End Function
 
     Public Function Actualizar(ByVal p As Jugadora) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras SET NombreJugadora='" & p.NombreJugadora & "', FechaNacimiento=" & p.FechaNacimiento & ", PuntosJugadora" & p.PuntosJugadora & ", PaisJugadora='" & p.Pais.idPais & "' WHERE idjugadora='" & p.idJugadora & "';")
+        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras SET NombreJugadora='" & p.NombreJugadora & "', FechaNacimientoJugadora=" & p.FechaNacimiento & ", PuntosJugadora=" & p.PuntosJugadora & ", PaisJugadora='" & p.Pais.idPais & "' WHERE idjugadora=" & p.idJugadora & ";")
     End Function
 
     Public Function Borrar(ByVal p As Jugadora) As Integer
@@ -76,6 +76,10 @@
         For Each aux In col
             lista.Add(aux(1).ToString & " - " & aux(2).ToString)
         Next
+        col = AgenteBD.ObtenerAgente.Leer("SELECT Torneos.NombreTorneo FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ";")
+        For Each aux In col
+            lista.Add(aux(1).ToString & " - Ganadora")
+        Next
         Return lista
 
     End Function
@@ -98,6 +102,10 @@
         Dim lista As New List(Of String)
         For Each aux In col
             lista.Add(aux(1).ToString & " - " & aux(2).ToString)
+        Next
+        col = AgenteBD.ObtenerAgente.Leer("SELECT Ediciones.Anualidad FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Torneos.idTorneo=" & idTor & ";")
+        For Each aux In col
+            lista.Add(aux(1).ToString & " - Ganadora")
         Next
         Return lista
 

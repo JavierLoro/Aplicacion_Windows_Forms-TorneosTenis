@@ -71,9 +71,9 @@
         ''Auxiliar
         Dim JAux As Jugadora
         ''Comprobar que los campos no estan vacios
-        If txbid_J.Text IsNot String.Empty And txbNomb_J.Text IsNot String.Empty And txbFn_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
+        If txbNomb_J.Text IsNot String.Empty And txbFn_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
             ''Creamos la jugadora con el id y modificamos su nombre por que este siempre se incializa vacio
-            JAux = New Jugadora(txbid_J.Text)
+            JAux = New Jugadora()
             JAux.NombreJugadora = txbNomb_J.Text
             JAux.FechaNacimiento = txbFn_J.Text
             JAux.Pais.idPais = txbPais_J.Text
@@ -90,7 +90,9 @@
                 Exit Sub
             End Try
             ''Se añade la persona a la listbox
-            listb_Jugadoras.Items.Add(JAux.idJugadora)
+            listb_Jugadoras.Items.Add(JAux.NombreJugadora & " (" & JAux.idJugadora & ")")
+            jugadoras.JugaDAO.Jugadora.Add(JAux)
+            listb_Jugadoras.SelectedIndex = listb_Jugadoras.TopIndex
         End If
     End Sub
 
@@ -111,7 +113,7 @@
                 Exit Sub
             End Try
             ''Despues de las comprobaciones mostrar la info al usuario sobre el intento de actualización
-            MessageBox.Show("El objeto" & JAux.idJugadora & "se ha actualizado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("La jugadora" & JAux.NombreJugadora & "( " & JAux.idJugadora & ")" & "se ha actualizado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
@@ -130,12 +132,13 @@
                     MessageBox.Show(ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End Try
-                '' Se elimina al usuario de la lista 
-                listb_Jugadoras.Items.Remove(JAux.idJugadora)
+
                 ''Limpiar los datos del usuario
                 btnLimpiar.PerformClick()
             End If
-
+            '' Se elimina al usuario de la lista 
+            jugadoras.JugaDAO.Jugadora.Remove(listb_Jugadoras.SelectedIndex)
+            listb_Jugadoras.Items.RemoveAt(listb_Jugadoras.SelectedIndex)
         End If
     End Sub
 
@@ -146,6 +149,8 @@
         listb_torn.Items.Clear()
         txbid_J.Text = String.Empty
         txbNomb_J.Text = String.Empty
+        txbFn_J.Text = String.Empty
+        txbPais_J.Text = String.Empty
         btnAñad_J.Enabled = True
         btnElim_J.Enabled = False
         btnMod_J.Enabled = False

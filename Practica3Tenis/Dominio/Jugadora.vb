@@ -1,7 +1,7 @@
 ﻿Public Class Jugadora
     Public Property idJugadora As Integer
     Public Property NombreJugadora As String
-    Public Property FechaNacimiento As Date
+    Public Property FechaNacimiento As String
     Public Property PuntosJugadora As Integer
     Public Property Pais As Pais
     Public ReadOnly Property JugaDAO As JugadoraDAO
