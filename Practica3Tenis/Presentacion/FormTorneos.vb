@@ -258,20 +258,24 @@
         If txtAnualidad.Text IsNot String.Empty Then
             TAux = New Torneos(txbId.Text)
             aux = Convert.ToInt32(txtAnualidad.Text)
-            If TAux.TorDAO.comprobarEdicion(TAux, aux) = Nothing Then
+            Try
+                If Not TAux.comprobarediciones(aux) Then
 
-                ''Generar edicion
-                EAux = New Edicion(aux, TAux, jugadoras)
-                lblNuevEdic.Text = "Edicion Creada"
-                lblNuevEdic.ForeColor = Color.Green
-                actualizarDatos(listTorneos.SelectedItem.ToString())
-                ComBoxEdiciones.SelectedItem = EAux.Anualidad
-            Else
-                lblNuevEdic.Text = "Edicion ya existe"
-                lblNuevEdic.ForeColor = Color.Red
+                    ''Generar edicion
+                    EAux = New Edicion(aux, TAux, jugadoras)
+                    lblNuevEdic.Text = "Edicion Creada"
+                    lblNuevEdic.ForeColor = Color.Green
+                    actualizarDatos(listTorneos.SelectedItem.ToString())
+                    ComBoxEdiciones.SelectedItem = EAux.Anualidad
+                Else
+                    lblNuevEdic.Text = "Edicion ya existe"
+                    lblNuevEdic.ForeColor = Color.Red
 
-            End If
-
+                End If
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End Try
         End If
 
     End Sub

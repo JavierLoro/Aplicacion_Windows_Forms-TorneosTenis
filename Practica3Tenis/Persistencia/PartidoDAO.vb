@@ -8,7 +8,7 @@
     Public Sub LeerTodas(ruta As String)
         Dim p As Partido
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente(ruta).Leer("SELECT * FROM Partidos ORDER BY idPartido")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT * FROM Partidos ORDER BY idPartido")
         For Each aux In col
             p = New Partido()
             p.Anualidad = aux(2).ToString
@@ -31,13 +31,13 @@
     End Sub
 
     Public Function Insertar(ByVal p As Partido) As Integer
-        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Partidos ([Anualidad], [Torneo], [Ganadora], [Ronda]) VALUES (" & p.Anualidad & ", " & p.Torneo.idTorneos & ", " & p.Ganadora.idJugadora & ", '" & p.Ronda & "');")
+        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Partidos (Anualidad, Torneo, Ganadora, Ronda) VALUES (" & p.Anualidad & ", " & p.Torneo.idTorneos & ", " & 1 & ", '" & p.Ronda & "');")
         p.idPartido = UltimoId()
         Return v
     End Function
 
     Public Function Actualizar(ByVal p As Partido) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Partidos SET Anualidad=" & p.Anualidad & ", Torneo=" & p.Torneo.idTorneos & ", Ronda=" & p.Ronda & " WHERE idPartido=" & p.idPartido & ";")
+        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Partidos SET Anualidad=" & p.Anualidad & ", Torneo=" & p.Torneo.idTorneos & ", Ganadora=" & p.Ganadora.idJugadora & ", Ronda='" & p.Ronda & "' WHERE idPartido=" & p.idPartido & ";")
     End Function
 
     Public Function Borrar(ByVal p As Partido) As Integer

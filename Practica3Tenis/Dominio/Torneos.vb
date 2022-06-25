@@ -18,6 +18,10 @@
         PaisTorneo = New Pais
     End Sub
 
+    Public Function comprobarediciones(aux As Integer) As Boolean
+        Return Me.TorDAO.comprobarEdicion(Me, aux)
+    End Function
+
     Public Sub LeerTodosTorneos(ruta As String)
         Me.TorDAO.LeerTodas(ruta)
     End Sub

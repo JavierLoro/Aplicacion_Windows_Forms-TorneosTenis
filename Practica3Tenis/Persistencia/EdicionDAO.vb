@@ -8,7 +8,7 @@
     Public Sub LeerTodas(ruta As String)
         Dim p As Edicion
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente(ruta).Leer("SELECT * FROM Ediciones ORDER BY Torneo")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT * FROM Ediciones ORDER BY Torneo")
         For Each aux In col
             p = New Edicion(Convert.ToInt32(aux(1).ToString), Convert.ToInt32(aux(2).ToString))
             p.Ganadora.idJugadora = Convert.ToInt32(aux(3).ToString)
@@ -50,7 +50,7 @@
 
 
     Public Function Insertar(ByVal p As Edicion) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("INSERT INTO Ediciones VALUES (" & p.Anualidad & ", " & p.Torneo.idTorneos & ", " & p.Ganadora.idJugadora & ");")
+        Return AgenteBD.ObtenerAgente.Modificar("INSERT INTO Ediciones VALUES (" & p.Anualidad & ", " & p.Torneo.idTorneos & ", " & 1 & ");")
     End Function
 
     Public Function InsertarJuego(ByVal p As Edicion) As Integer
@@ -58,11 +58,11 @@
     End Function
 
     Public Function Actualizar(ByVal p As Edicion) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Ediciones SET Ganadora=" & p.Ganadora.idJugadora & " WHERE Anualidad=" & p.Anualidad & ", Torneo=" & p.Torneo.idTorneos & ";")
+        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Ediciones SET Ganadora=" & p.Ganadora.idJugadora & " WHERE Anualidad=" & p.Anualidad & " AND Torneo=" & p.Torneo.idTorneos & ";")
     End Function
 
     Public Function Borrar(ByVal p As Edicion) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("DELETE FROM Ediciones WHERE Anualidad='" & p.Anualidad & "AND Torneo=" & p.Torneo.idTorneos & "';")
+        Return AgenteBD.ObtenerAgente.Modificar("DELETE FROM Ediciones WHERE Anualidad='" & p.Anualidad & " AND Torneo=" & p.Torneo.idTorneos & "';")
     End Function
 
     Public Function LeerTorneosParticipados(jugadora As Jugadora) As Queue

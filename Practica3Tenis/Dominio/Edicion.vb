@@ -73,6 +73,7 @@
 
     Public Function GenerarEnfrentamientos(jugadoras As Jugadora) As Integer
         Randomize()
+        Me.InsertarEdicion()
         Dim value As Integer
         Dim j As Jugadora
         Dim rango = jugadoras.NumeroJugadoras
@@ -91,42 +92,39 @@
         jugadorasTorneo = OrdenarJugadoras(jugadorasTorneo)
 
         ''Primera Fase
-        Dim fase1 = "cuartos"
+        Dim fase1 = "c"
         Dim g1 = generarPartido(jugadorasTorneo(0), jugadorasTorneo(7), fase1)
         Dim g2 = generarPartido(jugadorasTorneo(1), jugadorasTorneo(6), fase1)
         Dim g3 = generarPartido(jugadorasTorneo(3), jugadorasTorneo(4), fase1)
         Dim g4 = generarPartido(jugadorasTorneo(2), jugadorasTorneo(5), fase1)
 
         ''SegundaFase
-        Dim fase2 = "semis"
+        Dim fase2 = "s"
         Dim f1 = generarPartido(g1, g3, fase2)
         Dim f2 = generarPartido(g2, g4, fase2)
 
         ''Final
-        Dim fase3 = "final"
+        Dim fase3 = "f"
         Dim ganadora = generarPartido(f1, f2, fase3)
         ''Puntos ganador torneo
-        If ganadora.idJugadora = g1.idJugadora Then
-            g1.sumarPuntos(100)
-            Me.Ganadora = g1
-            Me.InsertarEdicion()
+        If ganadora.idJugadora = f1.idJugadora Then
+            f1.sumarPuntos(100)
         Else
-            g3.sumarPuntos(100)
-            Me.Ganadora = g3
-            Me.InsertarEdicion()
-
+            f2.sumarPuntos(100)
         End If
+        Me.Ganadora = ganadora
+        Me.ActualizarEdicion()
 
         Return Nothing
     End Function
 
     Public Function puntosObtenidos(ronda As String) As Integer
         Select Case ronda
-            Case "cuartos"
+            Case "c"
                 Return 10
-            Case "semis"
+            Case "s"
                 Return 25
-            Case "final"
+            Case "f"
                 Return 50
             Case Else
                 Return 100
@@ -147,6 +145,9 @@
         rand1 = CInt(Int((2 * Rnd()) + 1))
         rand2 = CInt(Int((2 * Rnd()) + 1))
         rand3 = CInt(Int((2 * Rnd()) + 1))
+        partido.Anualidad = Me.Anualidad
+        partido.Torneo = Me.Torneo
+        partido.InsertarPartido()
 
         If rand1 = 1 Then
             s1.Add(6)
@@ -171,9 +172,6 @@
             s3.Add(CInt(Int((4 * Rnd()) + 1)))
             s3.Add(6)
         End If
-
-        partido.Anualidad = Me.Anualidad
-        partido.Torneo = Me.Torneo
 
         ''Juego jugadora1
         Jaux1 = New Juegos(j1)
@@ -221,7 +219,7 @@
         End If
         ''Guardar partido y juegos
 
-        partido.InsertarPartido()
+        partido.ActualizarPartido()
         Jaux1.Partido = partido
         Jaux2.Partido = partido
         partiDAO.InsertarJuego(Jaux1)

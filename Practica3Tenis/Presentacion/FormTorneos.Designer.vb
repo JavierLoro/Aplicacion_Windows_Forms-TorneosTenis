@@ -233,9 +233,9 @@ Partial Class FormTorneos
         'pF2
         '
         Me.pF2.AutoSize = True
-        Me.pF2.Location = New System.Drawing.Point(265, 271)
+        Me.pF2.Location = New System.Drawing.Point(251, 271)
         Me.pF2.Name = "pF2"
-        Me.pF2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.pF2.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.pF2.Size = New System.Drawing.Size(13, 13)
         Me.pF2.TabIndex = 50
         Me.pF2.Text = "0"

@@ -1,33 +1,32 @@
 ﻿Public Class AgenteBD
-
     Private Shared _instancia As AgenteBD
-    Private Shared conexion As OleDb.OleDbConnection
-    Private Const cadenaConexionBase As String = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source="
-    Private Shared cadenaConexion As String
-
+    Private Shared conexion As MySql.Data.MySqlClient.MySqlConnection
+    Private Const cadenaConexion As String = "server=localhost;database=tenis;uid=root;pwd=root;Convert Zero Datetime=True"
     Private Sub New()
-        AgenteBD.conexion = New OleDb.OleDbConnection(AgenteBD.cadenaConexion)
-        AgenteBD.conexion.Open()
+        AgenteBD.conexion = New MySql.Data.MySqlClient.MySqlConnection(AgenteBD.cadenaConexion)
     End Sub
-
     Public Shared Function ObtenerAgente() As AgenteBD
         If AgenteBD._instancia Is Nothing Then
             AgenteBD._instancia = New AgenteBD
         End If
         Return AgenteBD._instancia
     End Function
-
-    Public Shared Function ObtenerAgente(ruta As String) As AgenteBD
-        AgenteBD.cadenaConexion = AgenteBD.cadenaConexionBase & ruta
-        Return AgenteBD.ObtenerAgente
-    End Function
-
+    Private Sub Conectar()
+        If AgenteBD.conexion.State = ConnectionState.Closed Then
+            AgenteBD.conexion.Open()
+        End If
+    End Sub
+    Private Sub Desconectar()
+        If AgenteBD.conexion.State = ConnectionState.Open Then
+            AgenteBD.conexion.Close()
+        End If
+    End Sub
     Public Function Leer(sql As String) As Collection
         Dim result As New Collection
         Dim fila As Collection
         Dim i As Integer
-        Dim reader As OleDb.OleDbDataReader
-        Dim com As New OleDb.OleDbCommand(sql, AgenteBD.conexion)
+        Dim reader As MySql.Data.MySqlClient.MySqlDataReader
+        Dim com As New MySql.Data.MySqlClient.MySqlCommand(sql, AgenteBD.conexion)
         Conectar()
         reader = com.ExecuteReader
         While reader.Read
@@ -40,26 +39,13 @@
         Desconectar()
         Return result
     End Function
-
     Public Function Modificar(sql As String) As Integer
-        Dim com As New OleDb.OleDbCommand(sql, AgenteBD.conexion)
+        Dim com As New MySql.Data.MySqlClient.MySqlCommand(sql, AgenteBD.conexion)
         Dim result As Integer
         Conectar()
         result = com.ExecuteNonQuery
         Desconectar()
         Return result
     End Function
-
-    Private Sub Conectar()
-        If AgenteBD.conexion.State = ConnectionState.Closed Then
-            AgenteBD.conexion.Open()
-        End If
-    End Sub
-
-    Private Sub Desconectar()
-        If AgenteBD.conexion.State = ConnectionState.Open Then
-            AgenteBD.conexion.Close()
-        End If
-    End Sub
 
 End Class

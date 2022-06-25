@@ -58,7 +58,7 @@
             ''Cargamos datos de la jugadora
             txbid_J.Text = JAux.idJugadora
             txbNomb_J.Text = JAux.NombreJugadora
-            txbFn_J.Text = JAux.FechaNacimiento
+            txbFn_J.Value = JAux.FechaNacimiento
             txbPais_J.Text = JAux.Pais.idPais
 
             btnAñad_J.Enabled = False
@@ -71,11 +71,11 @@
         ''Auxiliar
         Dim JAux As Jugadora
         ''Comprobar que los campos no estan vacios
-        If txbNomb_J.Text IsNot String.Empty And txbFn_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
+        If txbNomb_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
             ''Creamos la jugadora con el id y modificamos su nombre por que este siempre se incializa vacio
             JAux = New Jugadora()
             JAux.NombreJugadora = txbNomb_J.Text
-            JAux.FechaNacimiento = txbFn_J.Text
+            JAux.FechaNacimiento = txbFn_J.Value.ToString("yyyy-MM-dd")
             JAux.Pais.idPais = txbPais_J.Text
 
             ''Intentamos insertar la jugadora en la BBDD, en caso de error se muestra al usuario
@@ -98,10 +98,10 @@
 
     Private Sub btnMod_J_Click(sender As Object, e As EventArgs) Handles btnMod_J.Click
         Dim JAux As Jugadora
-        If txbid_J.Text IsNot String.Empty And txbNomb_J.Text IsNot String.Empty And txbFn_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
+        If txbid_J.Text IsNot String.Empty And txbNomb_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
             JAux = New Jugadora(txbid_J.Text)
             JAux.NombreJugadora = txbNomb_J.Text
-            JAux.FechaNacimiento = txbFn_J.Text
+            JAux.FechaNacimiento = txbFn_J.Value.ToString("yyyy-MM-dd")
             JAux.Pais.idPais = txbPais_J.Text
             Try
                 If JAux.ActualizarJugadora() <> 1 Then

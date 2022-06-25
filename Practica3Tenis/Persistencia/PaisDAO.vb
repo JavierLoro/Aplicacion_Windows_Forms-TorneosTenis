@@ -8,7 +8,7 @@
     Public Sub LeerTodas(ruta As String)
         Dim p As Pais
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente(ruta).Leer("SELECT * FROM Paises ORDER BY idPais")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT * FROM Paises ORDER BY idPais")
         For Each aux In col
             p = New Pais(aux(1).ToString)
             p.NombrePais = aux(2).ToString

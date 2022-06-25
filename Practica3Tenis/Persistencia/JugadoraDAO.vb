@@ -8,7 +8,7 @@
     Public Sub LeerTodas(ruta As String)
         Dim p As Jugadora
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente(ruta).Leer("SELECT * FROM Jugadoras ORDER BY PuntosJugadora DESC")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT * FROM Jugadoras ORDER BY PuntosJugadora DESC")
         For Each aux In col
             p = New Jugadora(Convert.ToInt32(aux(1).ToString))
             p.NombreJugadora = aux(2).ToString
@@ -26,7 +26,7 @@
         For Each aux In col
             p = New Jugadora(Convert.ToInt32(aux(1).ToString))
             p.NombreJugadora = aux(2).ToString
-            p.FechaNacimiento = Date.Parse(aux(3).ToString)
+            p.FechaNacimiento = aux(3).ToString
             p.PuntosJugadora = Convert.ToInt32(aux(4).ToString)
             p.Pais.idPais = aux(5).ToString
             Me.Jugadora.Add(p)
@@ -38,20 +38,20 @@
         col = AgenteBD.ObtenerAgente.Leer("SELECT * FROM Jugadoras WHERE idJugadora=" & p.idJugadora & ";")
         For Each aux In col
             p.NombreJugadora = aux(2).ToString
-            p.FechaNacimiento = Date.Parse(aux(3).ToString)
+            p.FechaNacimiento = aux(3).ToString
             p.PuntosJugadora = Convert.ToInt32(aux(4).ToString)
             p.Pais.idPais = aux(5).ToString
         Next
     End Sub
 
     Public Function Insertar(ByVal p As Jugadora) As Integer
-        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Jugadoras ([NombreJugadora], [FechaNacimientoJugadora], [PuntosJugadora], [PaisJugadora]) VALUES ('" & p.NombreJugadora & "', " & p.FechaNacimiento & ", " & 0 & ", '" & p.Pais.idPais & "');")
+        Dim v = AgenteBD.ObtenerAgente.Modificar("INSERT INTO Jugadoras (NombreJugadora, FechaNacimientoJugadora, PuntosJugadora, PaisJugadora) VALUES ('" & p.NombreJugadora & "', '" & p.FechaNacimiento & "', " & 0 & ", '" & p.Pais.idPais & "');")
         p.idJugadora = UltimoId()
         Return v
     End Function
 
     Public Function Actualizar(ByVal p As Jugadora) As Integer
-        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras SET NombreJugadora='" & p.NombreJugadora & "', FechaNacimientoJugadora=" & p.FechaNacimiento & ", PuntosJugadora=" & p.PuntosJugadora & ", PaisJugadora='" & p.Pais.idPais & "' WHERE idjugadora=" & p.idJugadora & ";")
+        Return AgenteBD.ObtenerAgente.Modificar("UPDATE Jugadoras SET NombreJugadora='" & p.NombreJugadora & "', FechaNacimientoJugadora='" & p.FechaNacimiento & "', PuntosJugadora=" & p.PuntosJugadora & ", PaisJugadora='" & p.Pais.idPais & "' WHERE idjugadora=" & p.idJugadora & ";")
     End Function
 
     Public Function Borrar(ByVal p As Jugadora) As Integer
@@ -74,9 +74,15 @@
         col = AgenteBD.ObtenerAgente.Leer("SELECT Torneos.NombreTorneo, Partidos.Ronda FROM Torneos INNER JOIN ((Partidos INNER JOIN Ediciones ON Partidos.Anualidad = Ediciones.Anualidad) INNER JOIN Juegos ON Partidos.idPartido = Juegos.Partido) ON (Torneos.idTorneo = Ediciones.Torneo) AND (Torneos.idTorneo = Partidos.Torneo) WHERE Juegos.Jugadora=" & p.idJugadora & " AND Partidos.Ganadora<>" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ";")
         Dim lista As New List(Of String)
         For Each aux In col
-            lista.Add(aux(1).ToString & " - " & aux(2).ToString)
+            If aux(2).ToString.Equals("c") Then
+                lista.Add(aux(1).ToString & " - Cuartofinalista")
+            ElseIf aux(2).ToString.Equals("s") Then
+                lista.Add(aux(1).ToString & " - Semifinalista")
+            ElseIf aux(2).ToString.Equals("f") Then
+                lista.Add(aux(1).ToString & " - Finalita")
+            End If
         Next
-        col = AgenteBD.ObtenerAgente.Leer("SELECT Torneos.NombreTorneo FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ";")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT DISTINCT Torneos.NombreTorneo FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Ediciones.Anualidad=" & edic & ";")
         For Each aux In col
             lista.Add(aux(1).ToString & " - Ganadora")
         Next
@@ -101,9 +107,15 @@
         col = AgenteBD.ObtenerAgente.Leer("Select Partidos.Anualidad, Partidos.Ronda FROM (Torneos INNER JOIN (Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido) On Torneos.idTorneo = Partidos.Torneo) INNER JOIN Ediciones On (Torneos.idTorneo = Ediciones.Torneo) And (Partidos.Anualidad = Ediciones.Anualidad) WHERE (Juegos.Jugadora = " & p.idJugadora & " And Not Partidos.Ganadora = " & p.idJugadora & ") And Torneos.idTorneo=" & idTor & ";")
         Dim lista As New List(Of String)
         For Each aux In col
-            lista.Add(aux(1).ToString & " - " & aux(2).ToString)
+            If aux(2).ToString.Equals("c") Then
+                lista.Add(aux(1).ToString & " - Cuartofinalista")
+            ElseIf aux(2).ToString.Equals("s") Then
+                lista.Add(aux(1).ToString & " - Semifinalista")
+            ElseIf aux(2).ToString.Equals("f") Then
+                lista.Add(aux(1).ToString & " - Finalita")
+            End If
         Next
-        col = AgenteBD.ObtenerAgente.Leer("SELECT Ediciones.Anualidad FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Torneos.idTorneo=" & idTor & ";")
+        col = AgenteBD.ObtenerAgente.Leer("SELECT DISTINCT Ediciones.Anualidad FROM Torneos INNER JOIN Ediciones ON Torneos.idTorneo = Ediciones.Torneo WHERE Ediciones.Ganadora=" & p.idJugadora & " AND Torneos.idTorneo=" & idTor & ";")
         For Each aux In col
             lista.Add(aux(1).ToString & " - Ganadora")
         Next
@@ -118,7 +130,7 @@
     Public Function PartidosGanados(ByVal p As Jugadora) As Integer
         Dim result
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("Select COUNT(Ganadora) FROM Ediciones WHERE Ganadora=" & p.idJugadora & ";")
+        col = AgenteBD.ObtenerAgente.Leer("Select COUNT(Ganadora) FROM Partidos WHERE Ganadora=" & p.idJugadora & ";")
         For Each aux In col
             result = Convert.ToInt32(aux(1).ToString)
         Next
@@ -128,7 +140,7 @@
     Public Function FinalesDisputadas(ByVal p As Jugadora) As Integer
         Dim result
         Dim col, aux As Collection
-        col = AgenteBD.ObtenerAgente.Leer("Select COUNT(Jugadora) FROM Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido WHERE Juegos.Jugadora=" & p.idJugadora & " And Ronda='final';")
+        col = AgenteBD.ObtenerAgente.Leer("Select COUNT(Jugadora) FROM Partidos INNER JOIN Juegos On Partidos.idPartido = Juegos.Partido WHERE Juegos.Jugadora=" & p.idJugadora & " And Ronda='f';")
         For Each aux In col
             result = Convert.ToInt32(aux(1).ToString)
         Next
