@@ -15,6 +15,10 @@
         For Each Pj As Jugadora In jugadoras.JugaDAO.Jugadora
             listb_Jugadoras.Items.Add(Pj.NombreJugadora & " (" & Pj.idJugadora & ")")
         Next
+        Dim pais As New Pais
+        For Each pa As String In pais.DevolverIds()
+            ComboBoxPaises.Items.Add(pa)
+        Next
     End Sub
 
 
@@ -59,7 +63,7 @@
             txbid_J.Text = JAux.idJugadora
             txbNomb_J.Text = JAux.NombreJugadora
             txbFn_J.Value = JAux.FechaNacimiento
-            txbPais_J.Text = JAux.Pais.idPais
+            ComboBoxPaises.SelectedItem = JAux.Pais.idPais
 
             btnAñad_J.Enabled = False
             btnElim_J.Enabled = True
@@ -71,12 +75,12 @@
         ''Auxiliar
         Dim JAux As Jugadora
         ''Comprobar que los campos no estan vacios
-        If txbNomb_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
+        If txbNomb_J.Text IsNot String.Empty Then
             ''Creamos la jugadora con el id y modificamos su nombre por que este siempre se incializa vacio
             JAux = New Jugadora()
             JAux.NombreJugadora = txbNomb_J.Text
             JAux.FechaNacimiento = txbFn_J.Value.ToString("yyyy-MM-dd")
-            JAux.Pais.idPais = txbPais_J.Text
+            JAux.Pais.idPais = ComboBoxPaises.SelectedItem.ToString
 
             ''Intentamos insertar la jugadora en la BBDD, en caso de error se muestra al usuario
             Try
@@ -98,11 +102,11 @@
 
     Private Sub btnMod_J_Click(sender As Object, e As EventArgs) Handles btnMod_J.Click
         Dim JAux As Jugadora
-        If txbid_J.Text IsNot String.Empty And txbNomb_J.Text IsNot String.Empty And txbPais_J IsNot String.Empty Then
+        If txbid_J.Text IsNot String.Empty And txbNomb_J.Text IsNot String.Empty Then
             JAux = New Jugadora(txbid_J.Text)
             JAux.NombreJugadora = txbNomb_J.Text
             JAux.FechaNacimiento = txbFn_J.Value.ToString("yyyy-MM-dd")
-            JAux.Pais.idPais = txbPais_J.Text
+            JAux.Pais.idPais = ComboBoxPaises.SelectedItem.ToString
             Try
                 If JAux.ActualizarJugadora() <> 1 Then
                     MessageBox.Show("Update Return <> 1", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -150,7 +154,6 @@
         txbid_J.Text = String.Empty
         txbNomb_J.Text = String.Empty
         txbFn_J.Text = String.Empty
-        txbPais_J.Text = String.Empty
         btnAñad_J.Enabled = True
         btnElim_J.Enabled = False
         btnMod_J.Enabled = False

@@ -25,7 +25,7 @@ Partial Class FormJugadoras
         Me.lblId = New System.Windows.Forms.Label()
         Me.lblNomb = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.txbPais_J = New System.Windows.Forms.TextBox()
+        Me.txbFn_J = New System.Windows.Forms.DateTimePicker()
         Me.txbNomb_J = New System.Windows.Forms.TextBox()
         Me.txbid_J = New System.Windows.Forms.TextBox()
         Me.lblPais = New System.Windows.Forms.Label()
@@ -43,7 +43,7 @@ Partial Class FormJugadoras
         Me.boxMain = New System.Windows.Forms.GroupBox()
         Me.btnLimpiar = New System.Windows.Forms.Button()
         Me.listb_Jugadoras = New System.Windows.Forms.ListBox()
-        Me.txbFn_J = New System.Windows.Forms.DateTimePicker()
+        Me.ComboBoxPaises = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.boxEstadisticas.SuspendLayout()
         Me.boxMain.SuspendLayout()
@@ -69,8 +69,8 @@ Partial Class FormJugadoras
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.ComboBoxPaises)
         Me.GroupBox1.Controls.Add(Me.txbFn_J)
-        Me.GroupBox1.Controls.Add(Me.txbPais_J)
         Me.GroupBox1.Controls.Add(Me.txbNomb_J)
         Me.GroupBox1.Controls.Add(Me.txbid_J)
         Me.GroupBox1.Controls.Add(Me.lblPais)
@@ -83,12 +83,12 @@ Partial Class FormJugadoras
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         '
-        'txbPais_J
+        'txbFn_J
         '
-        Me.txbPais_J.Location = New System.Drawing.Point(138, 137)
-        Me.txbPais_J.Name = "txbPais_J"
-        Me.txbPais_J.Size = New System.Drawing.Size(107, 20)
-        Me.txbPais_J.TabIndex = 9
+        Me.txbFn_J.Location = New System.Drawing.Point(138, 93)
+        Me.txbFn_J.Name = "txbFn_J"
+        Me.txbFn_J.Size = New System.Drawing.Size(107, 20)
+        Me.txbFn_J.TabIndex = 11
         '
         'txbNomb_J
         '
@@ -248,12 +248,13 @@ Partial Class FormJugadoras
         Me.listb_Jugadoras.Size = New System.Drawing.Size(169, 277)
         Me.listb_Jugadoras.TabIndex = 9
         '
-        'txbFn_J
+        'ComboBoxPaises
         '
-        Me.txbFn_J.Location = New System.Drawing.Point(138, 93)
-        Me.txbFn_J.Name = "txbFn_J"
-        Me.txbFn_J.Size = New System.Drawing.Size(107, 20)
-        Me.txbFn_J.TabIndex = 11
+        Me.ComboBoxPaises.FormattingEnabled = True
+        Me.ComboBoxPaises.Location = New System.Drawing.Point(138, 137)
+        Me.ComboBoxPaises.Name = "ComboBoxPaises"
+        Me.ComboBoxPaises.Size = New System.Drawing.Size(107, 21)
+        Me.ComboBoxPaises.TabIndex = 11
         '
         'FormJugadoras
         '
@@ -275,7 +276,6 @@ Partial Class FormJugadoras
     Friend WithEvents lblId As Label
     Friend WithEvents lblNomb As Label
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents txbPais_J As TextBox
     Friend WithEvents txbNomb_J As TextBox
     Friend WithEvents txbid_J As TextBox
     Friend WithEvents lblPais As Label
@@ -294,4 +294,5 @@ Partial Class FormJugadoras
     Friend WithEvents listb_torn As ListBox
     Friend WithEvents btnLimpiar As Button
     Friend WithEvents txbFn_J As DateTimePicker
+    Friend WithEvents ComboBoxPaises As ComboBox
 End Class

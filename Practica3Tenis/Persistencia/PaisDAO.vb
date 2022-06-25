@@ -46,4 +46,14 @@
     Public Function Borrar(ByVal p As Pais) As Integer
         Return AgenteBD.ObtenerAgente.Modificar("DELETE FROM Paises WHERE idPais='" & p.idPais & "';")
     End Function
+
+    Public Function LeerIds() As List(Of String)
+        Dim col, aux As Collection
+        Dim listPaises = New List(Of String)
+        col = AgenteBD.ObtenerAgente.Leer("SELECT idPais FROM Paises ORDER BY idPais")
+        For Each aux In col
+            listPaises.Add(aux(1).ToString)
+        Next
+        Return listPaises
+    End Function
 End Class

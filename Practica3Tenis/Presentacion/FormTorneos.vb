@@ -15,7 +15,10 @@
         For Each tor As Torneos In torneos.TorDAO.Torneo
             listTorneos.Items.Add(tor.idTorneos)
         Next
-
+        Dim pais As New Pais
+        For Each pa As String In pais.DevolverIds()
+            ComboBoxPaises.Items.Add(pa)
+        Next
     End Sub
     Private Sub listb_Torneos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listTorneos.SelectedIndexChanged
         Dim TAux As Torneos
@@ -49,7 +52,7 @@
             txbId.Text = TAux.idTorneos
             txbNombre.Text = TAux.NombreTorneo
             txbCiu.Text = TAux.CiudadTorneo
-            txbPais.Text = TAux.PaisTorneo.idPais
+            ComboBoxPaises.SelectedItem = TAux.PaisTorneo.idPais
 
             If Not ComBoxEdiciones.Items.Count = 0 Then
                 ComBoxEdiciones.SelectedIndex = 0
@@ -154,7 +157,7 @@
             txbId.Text = TAux.idTorneos
             txbNombre.Text = TAux.NombreTorneo
             txbCiu.Text = TAux.CiudadTorneo
-            txbPais.Text = TAux.PaisTorneo.idPais
+            ComboBoxPaises.SelectedItem = TAux.PaisTorneo.idPais
 
 
             btnAñad.Enabled = False
@@ -168,12 +171,12 @@
         ''Auxiliar
         Dim TAux As Torneos
         ''Comprobar que los campos no estan vacios
-        If txbNombre.Text IsNot String.Empty And txbCiu.Text IsNot String.Empty And txbPais IsNot String.Empty Then
+        If txbNombre.Text IsNot String.Empty And txbCiu.Text IsNot String.Empty Then
             ''Creamos la jugadora con el id y modificamos su nombre por que este siempre se incializa vacio
             TAux = New Torneos()
             TAux.NombreTorneo = txbNombre.Text
             TAux.CiudadTorneo = txbCiu.Text
-            TAux.PaisTorneo.idPais = txbPais.Text
+            TAux.PaisTorneo.idPais = ComboBoxPaises.SelectedItem.ToString
             ''Intentamos insertar el objeto en la BBDD, en caso de error se muestra al usuario
             Try
                 ''metemos en el if la operacion que queremos hacer para hacer la comprobacion de que ha salido bien
@@ -193,11 +196,11 @@
 
     Private Sub btnMod_Click(sender As Object, e As EventArgs) Handles btnMod.Click
         Dim TAux As Torneos
-        If txbId.Text IsNot String.Empty And txbNombre.Text IsNot String.Empty And txbCiu.Text IsNot String.Empty And txbPais IsNot String.Empty Then
+        If txbId.Text IsNot String.Empty And txbNombre.Text IsNot String.Empty And txbCiu.Text IsNot String.Empty Then
             TAux = New Torneos(txbId.Text)
             TAux.NombreTorneo = txbNombre.Text
             TAux.CiudadTorneo = txbCiu.Text
-            TAux.PaisTorneo.idPais = txbPais.Text
+            TAux.PaisTorneo.idPais = ComboBoxPaises.SelectedItem.ToString
             Try
                 If TAux.ActualizarTorneos() <> 1 Then
                     MessageBox.Show("Update Return <> 1", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -242,7 +245,6 @@
         txbId.Text = String.Empty
         txbNombre.Text = String.Empty
         txbCiu.Text = String.Empty
-        txbPais.Text = String.Empty
 
         btnAñad.Enabled = True
         btnElim.Enabled = False

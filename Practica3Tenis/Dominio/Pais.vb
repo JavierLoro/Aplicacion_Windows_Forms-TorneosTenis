@@ -34,4 +34,8 @@
     Public Function BorrarPaises() As Integer
         Return Me.paisDAO.Borrar(Me)
     End Function
+
+    Public Function DevolverIds() As List(Of String)
+        Return Me.paisDAO.LeerIds()
+    End Function
 End Class

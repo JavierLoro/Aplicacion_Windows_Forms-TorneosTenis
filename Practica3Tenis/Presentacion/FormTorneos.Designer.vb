@@ -26,7 +26,6 @@ Partial Class FormTorneos
         Me.btnMod = New System.Windows.Forms.Button()
         Me.btnAñad = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.txbPais = New System.Windows.Forms.TextBox()
         Me.txbCiu = New System.Windows.Forms.TextBox()
         Me.txbNombre = New System.Windows.Forms.TextBox()
         Me.txbId = New System.Windows.Forms.TextBox()
@@ -74,6 +73,7 @@ Partial Class FormTorneos
         Me.btnNuevaEdicion = New System.Windows.Forms.Button()
         Me.listTorneos = New System.Windows.Forms.ListBox()
         Me.btnLimpiar = New System.Windows.Forms.Button()
+        Me.ComboBoxPaises = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.masInfTorneos.SuspendLayout()
         Me.boxMain.SuspendLayout()
@@ -110,7 +110,7 @@ Partial Class FormTorneos
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.txbPais)
+        Me.GroupBox1.Controls.Add(Me.ComboBoxPaises)
         Me.GroupBox1.Controls.Add(Me.txbCiu)
         Me.GroupBox1.Controls.Add(Me.txbNombre)
         Me.GroupBox1.Controls.Add(Me.txbId)
@@ -123,13 +123,6 @@ Partial Class FormTorneos
         Me.GroupBox1.Size = New System.Drawing.Size(258, 169)
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
-        '
-        'txbPais
-        '
-        Me.txbPais.Location = New System.Drawing.Point(110, 137)
-        Me.txbPais.Name = "txbPais"
-        Me.txbPais.Size = New System.Drawing.Size(135, 20)
-        Me.txbPais.TabIndex = 9
         '
         'txbCiu
         '
@@ -598,6 +591,14 @@ Partial Class FormTorneos
         Me.btnLimpiar.Text = "Limpiar"
         Me.btnLimpiar.UseVisualStyleBackColor = True
         '
+        'ComboBoxPaises
+        '
+        Me.ComboBoxPaises.FormattingEnabled = True
+        Me.ComboBoxPaises.Location = New System.Drawing.Point(110, 134)
+        Me.ComboBoxPaises.Name = "ComboBoxPaises"
+        Me.ComboBoxPaises.Size = New System.Drawing.Size(135, 21)
+        Me.ComboBoxPaises.TabIndex = 9
+        '
         'FormTorneos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -621,7 +622,6 @@ Partial Class FormTorneos
     Friend WithEvents btnMod As Button
     Friend WithEvents btnAñad As Button
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents txbPais As TextBox
     Friend WithEvents txbCiu As TextBox
     Friend WithEvents txbNombre As TextBox
     Friend WithEvents txbId As TextBox
@@ -669,4 +669,5 @@ Partial Class FormTorneos
     Friend WithEvents pG3 As Label
     Friend WithEvents pG1 As Label
     Friend WithEvents pG4 As Label
+    Friend WithEvents ComboBoxPaises As ComboBox
 End Class
