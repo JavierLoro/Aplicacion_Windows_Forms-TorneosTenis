@@ -117,6 +117,7 @@
                 Exit Sub
             End Try
             ''Despues de las comprobaciones mostrar la info al usuario sobre el intento de actualización
+            listb_Jugadoras.Items(listb_Jugadoras.SelectedIndex) = JAux.NombreJugadora & " (" & JAux.idJugadora & ")"
             MessageBox.Show("La jugadora" & JAux.NombreJugadora & "( " & JAux.idJugadora & ")" & "se ha actualizado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
@@ -141,7 +142,7 @@
                 btnLimpiar.PerformClick()
             End If
             '' Se elimina al usuario de la lista 
-            jugadoras.JugaDAO.Jugadora.Remove(listb_Jugadoras.SelectedIndex)
+            jugadoras.JugaDAO.Jugadora.Remove(listb_Jugadoras.SelectedIndex + 1)
             listb_Jugadoras.Items.RemoveAt(listb_Jugadoras.SelectedIndex)
         End If
     End Sub

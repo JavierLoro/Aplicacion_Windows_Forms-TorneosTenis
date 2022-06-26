@@ -25,6 +25,7 @@ Partial Class FormJugadoras
         Me.lblId = New System.Windows.Forms.Label()
         Me.lblNomb = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ComboBoxPaises = New System.Windows.Forms.ComboBox()
         Me.txbFn_J = New System.Windows.Forms.DateTimePicker()
         Me.txbNomb_J = New System.Windows.Forms.TextBox()
         Me.txbid_J = New System.Windows.Forms.TextBox()
@@ -43,7 +44,6 @@ Partial Class FormJugadoras
         Me.boxMain = New System.Windows.Forms.GroupBox()
         Me.btnLimpiar = New System.Windows.Forms.Button()
         Me.listb_Jugadoras = New System.Windows.Forms.ListBox()
-        Me.ComboBoxPaises = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.boxEstadisticas.SuspendLayout()
         Me.boxMain.SuspendLayout()
@@ -82,6 +82,15 @@ Partial Class FormJugadoras
         Me.GroupBox1.Size = New System.Drawing.Size(258, 169)
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
+        '
+        'ComboBoxPaises
+        '
+        Me.ComboBoxPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxPaises.FormattingEnabled = True
+        Me.ComboBoxPaises.Location = New System.Drawing.Point(138, 137)
+        Me.ComboBoxPaises.Name = "ComboBoxPaises"
+        Me.ComboBoxPaises.Size = New System.Drawing.Size(107, 21)
+        Me.ComboBoxPaises.TabIndex = 11
         '
         'txbFn_J
         '
@@ -203,6 +212,7 @@ Partial Class FormJugadoras
         '
         'listaAños
         '
+        Me.listaAños.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.listaAños.FormattingEnabled = True
         Me.listaAños.Location = New System.Drawing.Point(123, 199)
         Me.listaAños.Name = "listaAños"
@@ -211,6 +221,7 @@ Partial Class FormJugadoras
         '
         'listaTorneos
         '
+        Me.listaTorneos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.listaTorneos.FormattingEnabled = True
         Me.listaTorneos.Location = New System.Drawing.Point(123, 29)
         Me.listaTorneos.Name = "listaTorneos"
@@ -247,14 +258,6 @@ Partial Class FormJugadoras
         Me.listb_Jugadoras.Name = "listb_Jugadoras"
         Me.listb_Jugadoras.Size = New System.Drawing.Size(169, 277)
         Me.listb_Jugadoras.TabIndex = 9
-        '
-        'ComboBoxPaises
-        '
-        Me.ComboBoxPaises.FormattingEnabled = True
-        Me.ComboBoxPaises.Location = New System.Drawing.Point(138, 137)
-        Me.ComboBoxPaises.Name = "ComboBoxPaises"
-        Me.ComboBoxPaises.Size = New System.Drawing.Size(107, 21)
-        Me.ComboBoxPaises.TabIndex = 11
         '
         'FormJugadoras
         '

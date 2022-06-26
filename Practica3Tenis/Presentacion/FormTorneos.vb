@@ -13,7 +13,7 @@
     Private Sub FormTorneos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.InitializeComponent()
         For Each tor As Torneos In torneos.TorDAO.Torneo
-            listTorneos.Items.Add(tor.idTorneos)
+            listTorneos.Items.Add(tor.NombreTorneo & " (" & tor.idTorneos & ")")
         Next
         Dim pais As New Pais
         For Each pa As String In pais.DevolverIds()
@@ -25,7 +25,7 @@
         Dim EAux As Edicion
 
         If listTorneos.SelectedItem IsNot Nothing Then
-            TAux = New Torneos(listTorneos.SelectedItem.ToString())
+            TAux = torneos.TorDAO.Torneo(listTorneos.SelectedIndex + 1)
             Try
                 TAux.LeerTorneos()
             Catch ex As Exception
@@ -68,15 +68,15 @@
         End If
     End Sub
 
-    Private Function actualizarCuadro(aux As String) As Integer
+    Private Function actualizarCuadro(aux As Torneos) As Integer
         Dim EAux As Edicion
-        Dim TAux = New Torneos(aux)
+        Dim TAux = aux
         EAux = New Edicion(ComBoxEdiciones.SelectedItem, Convert.ToInt32(TAux.idTorneos))
         Dim tabla As List(Of String) = TAux.SacarCuadro(EAux.Anualidad)
         Dim StrAux As New List(Of String())
 
-        For Each aux In tabla
-            Dim Saux = Split(aux)
+        For Each au In tabla
+            Dim Saux = Split(au)
             StrAux.Add(Saux)
 
         Next
@@ -126,12 +126,12 @@
     End Function
 
 
-    Private Function actualizarDatos(aux As String) As Integer
+    Private Function actualizarDatos(aux As Torneos) As Integer
         Dim TAux As Torneos
 
 
         If listTorneos.SelectedItem IsNot Nothing Then
-            TAux = New Torneos(aux)
+            TAux = aux
             Try
                 TAux.LeerTorneos()
             Catch ex As Exception
@@ -189,7 +189,9 @@
                 Exit Sub
             End Try
             ''Se añade el objeto a la listbox
-            listTorneos.Items.Add(TAux.idTorneos)
+            listTorneos.Items.Add(TAux.NombreTorneo & " (" & TAux.idTorneos & " )")
+            torneos.TorDAO.Torneo.Add(TAux)
+            listTorneos.SelectedIndex = listTorneos.Items.Count - 1
 
         End If
     End Sub
@@ -231,7 +233,8 @@
                     Exit Sub
                 End Try
                 '' Se elimina al usuario de la lista 
-                listTorneos.Items.Remove(TAux.idTorneos)
+                torneos.TorDAO.Torneo.Remove(listTorneos.SelectedIndex + 1)
+                listTorneos.Items.RemoveAt(listTorneos.SelectedIndex)
                 ''Limpiar los datos del usuario
                 btnLimpiar.PerformClick()
             End If
@@ -249,6 +252,7 @@
         btnAñad.Enabled = True
         btnElim.Enabled = False
         btnMod.Enabled = False
+        btnNuevaEdicion.Enabled = False
     End Sub
 
     Private Sub btnNuevaEdicion_Click(sender As Object, e As EventArgs) Handles btnNuevaEdicion.Click
@@ -257,7 +261,7 @@
         Dim TAux As Torneos
         Dim aux As Integer
         ''Comprobar que los campos no estan vacios
-        If txtAnualidad.Text IsNot String.Empty Then
+        If txtAnualidad.Text IsNot String.Empty And IsNumeric(txtAnualidad.Text) Then
             TAux = New Torneos(txbId.Text)
             aux = Convert.ToInt32(txtAnualidad.Text)
             Try
@@ -267,7 +271,7 @@
                     EAux = New Edicion(aux, TAux, jugadoras)
                     lblNuevEdic.Text = "Edicion Creada"
                     lblNuevEdic.ForeColor = Color.Green
-                    actualizarDatos(listTorneos.SelectedItem.ToString())
+                    actualizarDatos(torneos.TorDAO.Torneo(listTorneos.SelectedIndex + 1))
                     ComBoxEdiciones.SelectedItem = EAux.Anualidad
                 Else
                     lblNuevEdic.Text = "Edicion ya existe"
@@ -283,6 +287,8 @@
     End Sub
 
     Private Sub ComBoxEdiciones_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComBoxEdiciones.SelectedIndexChanged
-        actualizarCuadro(listTorneos.SelectedItem)
+        actualizarCuadro(torneos.TorDAO.Torneo(listTorneos.SelectedIndex + 1))
     End Sub
+
+
 End Class
